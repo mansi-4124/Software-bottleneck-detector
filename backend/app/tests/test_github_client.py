@@ -35,7 +35,7 @@ def test_fetch_repository(mock_get):
 
     mock_response.raise_for_status.return_value = None
 
-    client = GitHubClient()
+    client = GitHubClient(token="fake-token")
 
     result = client.fetch_repository(
         owner="facebook",

@@ -2,17 +2,20 @@
 GitHub API client.
 """
 import requests
+import os
 
 from app.core.config import settings
 
-if not settings.GITHUB_TOKEN:
-    raise ValueError(
-        "GITHUB_TOKEN is not configured"
-    )
 
 class GitHubClient:
 
     BASE_URL = "https://api.github.com"
+
+    def __init__(self, token: str | None = None):
+        self.token = token or os.getenv("GITHUB_TOKEN")
+
+        if not self.token:
+            raise ValueError("GITHUB_TOKEN is not configured")
 
     @classmethod
     def build_repo_url(

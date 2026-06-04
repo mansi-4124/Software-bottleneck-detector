@@ -1,4 +1,6 @@
-from sqlalchemy.orm import DeclarativeBase
+from app.db.base_class import Base
 
-class Base(DeclarativeBase):
-    pass
+# Import all models here
+from app.models.repository import Repository
+
+__all__ = ["Base"]

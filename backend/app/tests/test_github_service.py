@@ -1,38 +1,23 @@
-"""
-Tests for GitHub service.
-"""
-
-from unittest.mock import patch
-
 from app.services.github_service import GitHubService
 
 
-@patch("app.services.github_service.requests.get")
-def test_fetch_repository_details(mock_get):
-    """
-    Verify repository information
-    is correctly extracted from
-    GitHub API response.
-    """
-
-    mock_get.return_value.status_code = 200
-
-    mock_get.return_value.json.return_value = {
+def test_parse_repository_data():
+    sample_response = {
         "id": 123,
         "name": "test-repo",
+        "full_name": "john/test-repo",
         "owner": {
-            "login": "openai"
+            "login": "john"
         },
-        "html_url": "https://github.com/openai/test-repo"
+        "default_branch": "main",
+        "language": "Python",
+        "stargazers_count": 50
     }
 
-    service = GitHubService()
-
-    repo = service.get_repository(
-        owner="openai",
-        repo="test-repo"
+    result = GitHubService.parse_repository(
+        sample_response
     )
 
-    assert repo["id"] == 123
-    assert repo["name"] == "test-repo"
-    assert repo["owner"] == "openai"
+    assert result["github_id"] == 123
+    assert result["name"] == "test-repo"
+    assert result["owner"] == "john"

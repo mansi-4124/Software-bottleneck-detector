@@ -51,3 +51,19 @@ class GitHubService:
             "owner": data["owner"]["login"],
             "url": data["html_url"]
         }
+    
+    @staticmethod
+    def parse_repository(data:dict)->dict:
+        """
+        Parse GitHub API response.
+        """
+
+        return {
+            "github_id": data["id"],
+            "name": data["name"],
+            "owner": data["owner"]["login"],
+            "full_name": data["full_name"],
+            "default_branch": data["default_branch"],
+            "language": data["language"],
+            "stars": data["stargazers_count"]
+        }

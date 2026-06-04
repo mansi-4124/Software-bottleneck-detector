@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from app.services.github_client import GitHubClient
 
 
@@ -12,17 +14,32 @@ def test_repo_url_generation():
         "https://api.github.com/repos/facebook/react"
     )
 
+
 def test_headers_present():
-    headers = GitHubClient.build_headers("token123")
+    headers = GitHubClient.build_headers(
+        "token123"
+    )
 
     assert headers["Authorization"] == "Bearer token123"
 
-def test_fetch_public_repo():
+
+@patch("app.services.github_client.requests.get")
+def test_fetch_repository(mock_get):
+
+    mock_response = mock_get.return_value
+
+    mock_response.json.return_value = {
+        "id": 1,
+        "name": "react"
+    }
+
+    mock_response.raise_for_status.return_value = None
+
     client = GitHubClient()
 
-    data = client.fetch_repository(
+    result = client.fetch_repository(
         owner="facebook",
         repo="react"
     )
 
-    assert data["name"] == "react"
+    assert result["name"] == "react"

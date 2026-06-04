@@ -5,6 +5,11 @@ import requests
 
 from app.core.config import settings
 
+if not settings.GITHUB_TOKEN:
+    raise ValueError(
+        "GITHUB_TOKEN is not configured"
+    )
+
 class GitHubClient:
 
     BASE_URL = "https://api.github.com"

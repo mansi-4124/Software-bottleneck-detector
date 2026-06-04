@@ -110,7 +110,6 @@ logs/
 # =========================
 
 mlruns/
-models/
 artifacts/
 checkpoints/
 

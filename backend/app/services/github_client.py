@@ -79,3 +79,30 @@ class GitHubClient:
         response.raise_for_status()
 
         return response.json()
+    
+    def fetch_pull_requests(
+        self,
+        owner: str,
+        repo: str,
+    ):
+        """
+        Fetch repository PRs.
+        """
+
+        url = (
+            f"{self.BASE_URL}"
+            f"/repos/{owner}/{repo}"
+            f"/pulls?state=all"
+        )
+
+        response = requests.get(
+            url,
+            headers=self.build_headers(
+                self.token
+            ),
+            timeout=30,
+        )
+
+        response.raise_for_status()
+
+        return response.json()

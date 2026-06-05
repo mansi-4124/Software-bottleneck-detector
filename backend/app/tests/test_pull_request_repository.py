@@ -7,6 +7,7 @@ from datetime import datetime
 from app.repositories.pull_request_repository import (
     PullRequestRepository
 )
+from app.models.repository import Repository
 
 
 def test_create_pull_request(
@@ -16,33 +17,21 @@ def test_create_pull_request(
     Verify PR persistence.
     """
 
-    repository = db_session.execute(
-        """
-        INSERT INTO repositories
-        (
-            github_id,
-            name,
-            owner,
-            full_name,
-            default_branch,
-            language,
-            stars
-        )
-        VALUES
-        (
-            1,
-            'react',
-            'facebook',
-            'facebook/react',
-            'main',
-            'JavaScript',
-            100
-        )
-        RETURNING id
-        """
+    repository = Repository(
+        github_id=1,
+        name="react",
+        owner="facebook",
+        full_name="facebook/react",
+        default_branch="main",
+        language="JavaScript",
+        stars=100,
     )
 
-    repository_id = repository.scalar()
+    db_session.add(repository)
+    db_session.commit()
+    db_session.refresh(repository)
+
+    repository_id = repository.id
 
     pr_repo = PullRequestRepository(
         db_session

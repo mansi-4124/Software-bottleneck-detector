@@ -55,3 +55,23 @@ class GitHubService:
             "commit_timestamp":
                 commit_data["commit"]["author"]["date"],
         }
+    
+    @staticmethod
+    def parse_pull_request(
+        data: dict
+    ):
+        """
+        Parse GitHub PR response.
+        """
+
+        return {
+            "github_pr_number": data["number"],
+            "title": data["title"],
+            "author": data["user"]["login"],
+            "state": data["state"],
+            "additions": data["additions"],
+            "deletions": data["deletions"],
+            "changed_files": data["changed_files"],
+            "created_at": data["created_at"],
+            "merged_at": data["merged_at"],
+        }

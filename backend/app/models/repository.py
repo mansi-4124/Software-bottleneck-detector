@@ -2,8 +2,7 @@ from sqlalchemy import String
 from sqlalchemy import BigInteger
 from sqlalchemy import Integer
 
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base_class import Base
 
@@ -59,4 +58,10 @@ class Repository(Base):
     stars: Mapped[int] = mapped_column(
         Integer,
         default=0
+    )
+
+    commits = relationship(
+        "Commit",
+        backref="repository",
+        cascade="all, delete-orphan"
     )

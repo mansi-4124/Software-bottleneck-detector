@@ -11,6 +11,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import relationship
 
 from app.db.base_class import Base
 
@@ -60,4 +61,9 @@ class Commit(Base):
     commit_timestamp: Mapped[DateTime] = mapped_column(
         DateTime,
         nullable=False
+    )
+
+    repository = relationship(
+        "Repository",
+        back_populates="commits"
     )

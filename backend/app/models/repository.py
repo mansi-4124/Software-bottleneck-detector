@@ -62,6 +62,6 @@ class Repository(Base):
 
     commits = relationship(
         "Commit",
-        backref="repository",
+        back_populates="repository",
         cascade="all, delete-orphan"
     )

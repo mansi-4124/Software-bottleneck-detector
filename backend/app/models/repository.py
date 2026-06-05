@@ -65,3 +65,9 @@ class Repository(Base):
         back_populates="repository",
         cascade="all, delete-orphan"
     )
+
+    pull_requests = relationship(
+        "PullRequest",
+        back_populates="repository",
+        cascade="all, delete-orphan"
+    )

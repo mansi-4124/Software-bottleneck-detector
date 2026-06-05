@@ -36,3 +36,22 @@ class GitHubService:
             "language": data["language"],
             "stars": data["stargazers_count"]
         }
+
+    @staticmethod
+    def parse_commit(
+        commit_data: dict,
+    ):
+        """
+        Parse commit payload.
+        """
+
+        return {
+            "github_sha": commit_data["sha"],
+            "message": commit_data["commit"]["message"],
+            "author_name":
+                commit_data["commit"]["author"]["name"],
+            "author_email":
+                commit_data["commit"]["author"]["email"],
+            "commit_timestamp":
+                commit_data["commit"]["author"]["date"],
+        }

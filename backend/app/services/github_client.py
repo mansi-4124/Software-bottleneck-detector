@@ -53,3 +53,29 @@ class GitHubClient:
         response.raise_for_status()
 
         return response.json()
+    
+    def fetch_commits(
+    self,
+    owner: str,
+    repo: str,
+    ):
+        """
+        Fetch repository commits.
+        """
+
+        url = (
+            f"{self.BASE_URL}/repos/"
+            f"{owner}/{repo}/commits"
+        )
+
+        response = requests.get(
+            url,
+            headers=self.build_headers(
+                self.token
+            ),
+            timeout=30,
+        )
+
+        response.raise_for_status()
+
+        return response.json()

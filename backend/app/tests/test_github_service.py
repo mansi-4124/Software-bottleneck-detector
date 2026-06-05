@@ -9,6 +9,7 @@ def test_parse_repository_data():
         "owner": {
             "login": "john"
         },
+        "description":"This was a test repo",
         "default_branch": "main",
         "language": "Python",
         "stargazers_count": 50

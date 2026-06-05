@@ -45,7 +45,7 @@ class GitHubClient:
         response = requests.get(
             self.build_repo_url(owner, repo),
             headers=self.build_headers(
-                settings.GITHUB_TOKEN
+                self.token
             ),
             timeout=30,
         )

@@ -1,11 +1,21 @@
+"""
+Database session management.
+
+Provides:
+- SQLAlchemy Engine
+- Session factory
+- Dependency injection helper
+"""
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from app.core.config import settings
 
+
 engine = create_engine(
     settings.DATABASE_URL,
-    echo=True
+    pool_pre_ping=True
 )
 
 SessionLocal = sessionmaker(
@@ -13,3 +23,18 @@ SessionLocal = sessionmaker(
     autoflush=False,
     bind=engine
 )
+
+
+def get_db():
+    """
+    FastAPI dependency for database session.
+
+    Yields:
+        SQLAlchemy Session
+    """
+    db = SessionLocal()
+
+    try:
+        yield db
+    finally:
+        db.close()

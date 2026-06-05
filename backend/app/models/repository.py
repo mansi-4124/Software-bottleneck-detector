@@ -31,6 +31,11 @@ class Repository(Base):
         nullable=False
     )
 
+    description: Mapped[str] = mapped_column(
+        String(255),
+        nullable=True
+    )
+
     full_name: Mapped[str] = mapped_column(
         String(255),
         nullable=False
